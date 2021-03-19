@@ -1,0 +1,12 @@
+function getProgress(){
+  const getP = (i) => {
+    if (i > 100) {
+      return 0;
+    }
+    document.body.firstElementChild.value = i;
+    setTimeout(getP, 1000, i + 1);
+  } 
+  setTimeout(getP, 1000, 1);
+
+}
+export default getProgress;
