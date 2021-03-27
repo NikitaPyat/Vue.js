@@ -1,0 +1,80 @@
+export const make = (str) => {
+  const out = {};
+  out.protocol = str.split("//")[0];
+  out.host = (str.split("://"))[1].split('/')[0];
+  const arr = str.split('/');
+  out.path = '/' + arr[arr.length - 1].split('?')[0];
+  const m = str.split('?');
+  if (m.length > 1){
+    out.params = m[1];
+  } else {
+    out.params = '';
+  }
+  return out;
+};
+
+export const setProtocol = (u, str) => {
+  u.protocol = str;
+  return u;
+};
+
+export const getProtocol = (u) => {
+  return u.protocol;
+};
+
+export const setHost = (u, str) => {
+  u.host = str;
+  return u;
+};
+
+export const getHost = (u) => {
+  return u.host;
+};
+
+export const setPath = (u, str) => {
+  u.path = str;
+  return u;
+};
+
+export const getPath = (u, str) => {
+  return u.path;
+};
+
+export const setQueryParam = (u, key, value) => {
+  const arr = u.params.split('&');
+  const arr2 = []
+  let arr1 = [];
+  let fl = 0
+  for (let i = 0; i < arr.length; i += 1) {
+    if (arr[i].split('=')[0].indexOf(key) !== -1) {
+      fl = 1;
+      arr1 = arr[i].split('=');
+      arr2.push(arr1[0] + '=' + value);
+    }
+    else{arr2.push(arr[i]);}
+  }
+  u.params = arr2[0];
+  if(fl === 0){
+    arr2.push(key + '=' + value);
+  }
+  for (let i = 1; i < arr2.length; i += 1){
+    u.params += '&' + arr2[i];
+  }
+  return u;
+};
+
+export const getQueryParam = (u, paramName, def = null) => {
+  const arr = u.params.split('&');
+  for (let val of arr){
+    if (val.split('=')[0].indexOf(paramName) !== -1) {
+      return val.split('=')[1];
+    }
+  }
+  return def;
+};
+
+export const toString = (u) => {
+  if (u.params === '') {
+    return u.protocol + '//' + u.host + u.path;
+  }
+  return u.protocol + '//' + u.host + u.path + '?' + u.params;
