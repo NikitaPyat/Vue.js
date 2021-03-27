@@ -1,0 +1,10 @@
+export default (mas, zn) => {
+  const fn = (acc, m) => {
+      const k = {zn: m, razn: Math.abs(m - zn)};
+      return k.razn < acc.razn ? k : acc;
+  }
+  if (mas.length !== 0) {
+    return mas.indexOf(mas.reduce(fn, {zn: mas[0], razn: Math.abs(mas[0] - zn)}).zn);
+  }
+  return null;
+}
