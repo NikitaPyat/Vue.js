@@ -1,0 +1,19 @@
+export default (string) => {
+  let result = '';
+  const validSymbols = {
+    G: 'C',
+    C: 'G',
+    T: 'A',
+    A: 'U',
+  };
+
+  for (let i = 0; i < string.length; i += 1) {
+    if (validSymbols[string[i]] === undefined) {
+      return null;
+    }
+
+    result += validSymbols[string[i]];
+  }
+
+  return result;
+};
